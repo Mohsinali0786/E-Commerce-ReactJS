@@ -1,0 +1,455 @@
+@font-face {
+  font-family: myfont;
+  src: url('./Assets//fonts/RubikMarkerHatch-Regular.ttf');
+}
+
+body {
+  background-color: lightblue !important;
+  /* background-color: #00E2E6 !important; */
+  overflow: visible !important;
+  /* background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20201026/pngtree-scene-with-geometrical-forms-the-poster-model-minimal-background-render-image_437743.jpg'); */
+}
+
+
+/* HomePage CSS */
+
+.Home-Section {
+  margin-top: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+}
+
+.Home-Section .Homepage-heading {
+  font-size: 30px;
+
+}
+
+.H-left-section>h4 {
+  font-size: 70%px;
+  color: gray;
+}
+
+.addtocart-btn {
+  width: 100% !important;
+  border-radius: 30px 30px 70px 70px !important;
+}
+
+.MuiCardContent-root {
+  height: 120px !important;
+}
+
+.Mob-navbaricons {
+  margin-right: 10px;
+}
+
+.homeimage {
+  /* margin: 70px; */
+  /* transform: scale(1); */
+}
+
+.Home-Section {
+  display: grid;
+  grid-template-columns: 30% 65%;
+}
+
+@media only screen and (max-width: 1300px) {
+  .homeimage {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .Home-Section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.Home-Section2 {
+
+  background-color: rgb(240, 240, 240);
+  font-size: 30px;
+  font-family: serif;
+  margin-top: 50px;
+}
+
+.Home-Section2a {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-bottom: 30px;
+}
+
+.services {
+  text-align: center;
+  /* height: 300px; */
+  margin-top: 2%;
+}
+
+.home-logoimg {
+  transform: scale(3);
+}
+
+
+.services>h4 {
+  font-size: 20px;
+  margin: 20px 50px;
+  /* font-size: ; */
+}
+
+.maincont {
+  padding-bottom: 50px;
+
+}
+
+@keyframes example {
+  0% {
+
+    margin-left: 80%;
+  }
+
+  100% {
+    /* position: absolute; */
+    margin-left: 0%;
+    color: red
+  }
+}
+
+.pageheading {
+  position: relative;
+  animation-name: example;
+  animation-duration: 1s;
+  /* animation-delay: 0.75s; */
+  margin-top: 40px;
+  font-family: serif;
+  font-size: 40px;
+
+
+  font-weight: bold;
+}
+
+/* Card Css */
+
+.Card-main-cont {
+  Width: 200px;
+  /* margin-top: 30px; */
+  margin-bottom: 20px;
+  border-radius: 30px !important;
+
+}
+
+.cardstyling {
+  display: flex;
+  justify-content: space-around;
+  padding-left: 20px;
+  flex-wrap: wrap;
+  /* margin-top: 300px; */
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translate3d(-300px, -50px, -135px);
+  }
+
+  100% {
+    transform: translate3d(0);
+  }
+}
+
+.onlinemall {
+  text-align: center;
+  font-family: serif;
+  margin-top: 20px;
+  animation: 3s ease-out 0s 1 slideInLeft;
+  font-size: 50px;
+}
+
+
+
+@keyframes example2 {
+  0% {
+    margin-left: 80%;
+  }
+
+  100% {
+    margin-left: 0%;
+  }
+}
+
+.MuiTypography-root {
+  font-size: 20px !important;
+}
+
+.MuiPaper-root {
+  border-radius: 50px;
+}
+
+/* Women ,Man and Kids Cards */
+.productcard {
+
+  border-radius: 30px;
+  animation-name: example2;
+  animation-duration: 2s;
+  margin: 10px;
+  /* padding-bottom: 20px; */
+  background-color: white;
+  text-align: center;
+  border: 2px solid;
+}
+
+.productcard:hover {
+  transform: scale(1.05)
+}
+
+.linkstyling {
+  color: black;
+  text-decoration: none;
+}
+
+.mlinkstyling {
+  color: black;
+  text-decoration: none;
+}
+
+.MuiToolbar-root {
+  background-color: rgb(240, 240, 240);
+  height: 20px;
+  color: black;
+
+}
+
+.p-img {
+  /* border-radius: 50px; */
+  width: 100%;
+  height: 220px;
+}
+
+/* .MuiGrid-root {
+  width: 250px;
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+
+
+
+
+/* .quan-btn {
+  width: 5vh;
+  height: 40px;
+  margin-left: 20px !important;
+
+  background-color: green !important;
+} */
+
+
+
+
+/* .lists2>h4 {
+  padding-left: 40px;
+} */
+
+/* .lists2>.quan-btn {
+  text-align: center;
+  margin-top: 20px;
+} */
+
+/* h1 {
+  text-align: center;
+} */
+
+/* h4 {
+  text-align: right;
+} */
+.D-quan-btn>button:nth-child(2) {
+  margin-left: 30px;
+
+}
+
+.D-quan-btn {
+  display: flex;
+  flex: 1;
+}
+
+.quan-btn {
+  width: 5%;
+}
+
+.del-btn {
+  /* width: 100%; */
+
+  margin-top: 20px !important;
+}
+
+@media only screen and (max-width: 450px) {
+  .update-quantity {
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .update-quantity:nth-child(2) {
+    text-align: left;
+
+  }
+}
+
+/* Mybag Css */
+.emptycart-text {
+  font-size: 30px !important;
+  text-align: center;
+}
+
+.ant-modal-body {
+
+  /* background-color: #00E2E6; */
+}
+
+.Bag-maindiv {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 300px;
+  width: 100%;
+  padding: 20px;
+  margin-left: 22px;
+  padding-top: 30px;
+}
+
+.webBag-maindiv {
+  margin: 0px 1%
+}
+
+.Bag-maindiv>h1 {
+  text-align: center;
+}
+
+.Bag-sub-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.divcol {
+  background-color: black;
+}
+
+.lists {
+  list-style: none;
+}
+
+.lists2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+.update-quantity {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+
+
+/* # Forms CSS */
+
+.ant-form {
+  margin-top: 5% !important;
+}
+
+.form-h2 {
+
+  font-size: 30px;
+  /* margin-top: 10%; */
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.form-h4 {
+  text-align: center;
+  margin-bottom: 35px;
+
+}
+
+.signin-formcontainer {
+  /* border-radius: 20px;
+  margin: 10%;
+  width: 70%; */
+
+  /* border: 1px solid black; */
+  /* text-align: center; */
+  /* background-image: linear-gradient(to top right, rgb(122, 101, 172), rgb(0, 255, 145)); */
+
+
+}
+
+.form-section {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-around;
+}
+
+.Loginoutbtns {
+  border-radius: 10px !important;
+  color: white !important;
+  margin-top: 20px;
+  padding: 5px 10px !important;
+  width: 150px !important;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+  background: linear-gradient(180deg, rgba(255, 0, 0, 1) 0%, rgba(255, 0, 0, 1) 50%, rgba(200, 0, 0, 1) 50.1%, rgba(200, 0, 0, 1) 100%) !important;
+  cursor: pointer !important;
+}
+
+.stylinginput {
+  background-color: whitesmoke;
+
+}
+
+.form-image {
+  width: 60%;
+  height: 50%;
+  margin-top: 12%;
+}
+
+@media only screen and (max-width: 780px) {
+  .form-image {
+    width: 50%;
+    height: 70%;
+  }
+
+  .signin-formstyling {
+    text-align: center;
+    width: 50%;
+    margin: 20px
+  }
+
+
+}
+
+@media only screen and (max-width: 620px) {
+  .form-image {
+    display: none;
+    /* width: 50%;
+    height: 70%;
+    margin-top: 30%; */
+  }
+
+  .signin-formstyling {
+    text-align: center;
+    width: 70%;
+    margin: 20px
+  }
+
+  .stylinginput {
+    background-color: whitesmoke !important;
+    border: 2px solid red !important;
+  }
+
+  .Loginoutbtns {
+    width: 80% !important;
+  }
+
+}
