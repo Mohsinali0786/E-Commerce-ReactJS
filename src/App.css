@@ -33,7 +33,7 @@ body {
 
 .addtocart-btn {
   width: 100% !important;
-  border-radius: 30px 30px 70px 70px !important;
+  border-radius: 10px 15px 60px 60px !important;
 }
 
 .MuiCardContent-root {
@@ -56,6 +56,8 @@ body {
 
 @media only screen and (max-width: 1300px) {
   .homeimage {
+    margin-top: 20px;
+
     width: 100%;
   }
 }
@@ -87,6 +89,7 @@ body {
   /* height: 300px; */
   margin-top: 2%;
 }
+
 
 .home-logoimg {
   transform: scale(3);
@@ -133,16 +136,17 @@ body {
 /* Card Css */
 
 .Card-main-cont {
+
   Width: 200px;
   /* margin-top: 30px; */
-  margin-bottom: 20px;
-  border-radius: 30px !important;
+  /* margin-bottom: 20px; */
+  border-radius: 30px 30px 0px 0px !important;
 
 }
 
 .cardstyling {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   padding-left: 20px;
   flex-wrap: wrap;
   /* margin-top: 300px; */
@@ -197,6 +201,10 @@ body {
   background-color: white;
   text-align: center;
   border: 2px solid;
+}
+
+.modal {
+  margin: 20px;
 }
 
 .productcard:hover {
@@ -452,4 +460,25 @@ body {
     width: 80% !important;
   }
 
+}
+
+.mymodal {
+  margin-left: 20% !important;
+  /* text-align: center; */
+}
+
+.modalimage {
+  width: 80%;
+  height: 300px;
+}
+
+@media only screen and (max-width: 500px) {
+  .modalimage {
+    width: 100%;
+    height: 200px;
+  }
+
+  .css-5fr58b {
+    margin-top: 150px;
+  }
 }

@@ -13,6 +13,11 @@ function WebMybag() {
     let WomenCollectionLen = JSON.parse(localStorage.getItem('Women'));
     let MenCollectionLen = JSON.parse(localStorage.getItem('Men'));
     let KidsCollectionLen = JSON.parse(localStorage.getItem('Kids'));
+    const [TotalItems, setTotalItems] = useState(0)
+
+    let WomenItems = 0;
+    let MenItems = 0;
+    let KidsItems = 0
 
     useEffect(() => {
         console.log("Use Effect 1")
@@ -20,6 +25,19 @@ function WebMybag() {
             console.log("Use Effect 2")
         }
         else {
+
+            if (WomenCollectionLen?.items) {
+                WomenItems = WomenCollectionLen.items.length
+                console.log("Total Women Item======>", WomenItems)
+            }
+
+            if (MenCollectionLen?.items) {
+                MenItems = MenCollectionLen.items.length
+            }
+            if (KidsCollectionLen?.items) {
+                KidsItems = KidsCollectionLen.items.length
+            }
+            setTotalItems(WomenItems + MenItems + KidsItems)
             console.log("Use Effect 3")
             setdeleteclicked(false)
 
@@ -96,7 +114,7 @@ function WebMybag() {
             <div style={{ marginTop: '30px' }}>
                 <h1 >Mybag</h1>
                 <div className="Bag-sub-div">
-                    {/* <h3>Total-Items:{allbagitems.length}</h3> */}
+                    <h3>Total-Items:{TotalItems}</h3>
                     {/* <h3>Cart ({totalUniqueItems})</h3> */}
                 </div>
 

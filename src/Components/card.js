@@ -2,9 +2,10 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 
 function MediaCard(props) {
+    console.log("props======>", props)
     return (
         <Card className='Card-main-cont' sx={{}}>
 
@@ -19,6 +20,11 @@ function MediaCard(props) {
                     Price:{props.price}
                 </Typography>
             </CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+                <Button onClick={() => { props.ViewDes()
+                console.log(props.index,"++++++++++++index number")
+                }}>View Description</Button>
+            </Typography>
             <CardActions>
             </CardActions>
         </Card >

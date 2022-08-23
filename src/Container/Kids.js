@@ -1,20 +1,74 @@
 import MediaCard from '../Components/card';
 import ResponsiveAppBar from '../Components/navbar'
 import { Container } from '@mui/system';
-import { Grid, Button } from '@mui/material';
+import { Grid, Button, Box, Typography } from '@mui/material';
 import Data from '../Components/data'
 import { useCart } from 'react-use-cart';
 import { useNavigate } from 'react-router-dom';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Swal from 'sweetalert2'
+
+// For Card
+
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+
+
+// for Model
+import Modal from '@mui/material/Modal';
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    // width: 400,
+    width: '100%',
+    height: 'auto',
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+// for model
 
 function Kids() {
     const Navigate = useNavigate()
     const [additems, setAddItems] = useState([])
+    const [MyModalData, setMyModalData] = useState({})
+
     let KidsCollectionLen = JSON.parse(localStorage.getItem('Kids'));
 
+
+    // for model
+
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpen = () =>
+        setOpenModal(true);
+    const handleClose = () => {
+        setOpenModal(false)
+        console.log("Open===>", openModal)
+    };
+
+
+    const modalData = (index) => {
+        handleOpen()
+        setMyModalData({
+
+            ItemName: Data.Kids[index].Name,
+            Price: Data.Kids[index].price,
+            img: Data.Kids[index].img,
+            Des: Data.Kids[index].Name + " is available in 3 sizes sm md lg quantity of each item will be given but before placing order please confirm that you selected item will be in our stock or not"
+
+
+        })
+        console.log("MyModalData=========>", MyModalData)
+
+    }
 
     useEffect(() => {
         console.log("additems.length", additems.length)
@@ -23,20 +77,26 @@ function Kids() {
         }
         else {
             var loginornot = JSON.parse(localStorage.getItem('id'))
-            if (loginornot.IsLogin === false) {
-                myalert1()
+            if (loginornot !== null) {
+                if (loginornot.IsLogin === false) {
+                    myalert1()
+                }
+                else {
+                    Swal.fire(
+                        'Succeed!',
+                        'You Item has been added to cart sucessfuly!',
+                        'success'
+                    )
+
+                    localStorage.setItem('Kids', JSON.stringify({ items: [...additems] }))
+                    console.log("Length====>???????", KidsCollectionLen?.items.length)
+                }
             }
             else {
-                Swal.fire(
-                    'Succeed!',
-                    'You Item has been added to cart sucessfuly!',
-                    'success'
-                )
-
-                localStorage.setItem('Kids', JSON.stringify({ items: [...additems] }))
-                console.log("Length====>???????", KidsCollectionLen?.items.length)
+                myalert1()
             }
         }
+
 
     }, [additems])
 
@@ -126,16 +186,65 @@ function Kids() {
             <h1 className='pageheading'>Kids Collection</h1>
             <Grid className='cardstyling'>
                 {
-                    Data.Kids.map((item, index) => {
+                    Data.Kids.map((items, i) => {
                         return (
-                            <Grid key={index} className='productcard'>
-                                <MediaCard img={item.img} itemName={item.Name} price={item.price} />
-                                <Button variant='contained' className='addtocart-btn' color='success' onClick={() => AddItemsInCart(item)}>Add To Cart</Button>
+                            // <Grid key={index} className='productcard'>
+                            <div key={i} className='productcard' >
 
-                            </Grid>
+
+                                <Card className='Card-main-cont' >
+
+                                    <img src={items.img} className='p-img' />
+                                    <CardContent sx={{ textAlign: 'center' }}>
+                                        <Typography gutterBottom variant="h5" component="div">
+
+                                            <h5><b>Product</b><br /><i>{items.Name}</i></h5>
+
+                                        </Typography>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            Price:${items.price}
+                                        </Typography>
+                                    </CardContent>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        <Button onClick={() => { modalData(i) }}>View Description</Button>
+                                    </Typography>
+                                    <CardActions>
+                                    </CardActions>
+                                </Card >
+                                <Button variant='contained' className='addtocart-btn' color='success' onClick={() => { AddItemsInCart(items) }}>Add To Cart</Button>
+                            </div>
+
+                            // </Grid>
                         )
                     })
                 }
+                <div>
+                    <Modal
+                        // index={index}
+                        open={openModal}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                        className='mymodal'
+                        sx={{ width: '70%', overflow: 'scroll', transform: 'scale(0.9)', marginTop: '20px' }}
+                    >
+                        <Box sx={style}>
+                            <img className='modalimage' src={MyModalData.img} style={{ width: '100%', height: '300px' }} />
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Name:{MyModalData.ItemName}
+                            </Typography>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Price:${MyModalData.Price}
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                <h3>Description</h3>
+                                <p>{MyModalData.Des}</p>
+                            </Typography>
+                            <Button onClick={() => handleClose()}>Close</Button>
+                        </Box>
+                    </Modal>
+                </div>
+
             </Grid>
         </Container >
     )

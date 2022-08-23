@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { Divider } from "antd";
 import Swal from "sweetalert2";
+import Women from "../Container/Women";
 const Mybag = () => {
     const [Quantity, SetQuantity] = useState(1);
     const [deleteclicked, setdeleteclicked] = useState(false)
     const [allbagitems, setallbagitems] = useState([])
+    const [aa, setaa] = useState()
 
     let AllItemsInBag;
 
@@ -15,12 +17,15 @@ const Mybag = () => {
     // let KidsItems=[];
 
     const [TotalItems, setTotalItems] = useState(0)
-    const [MenItems, setMenItems] = useState([])
-    const [KidsItem, setKidsItems] = useState([])
+    let WomenItems = 0;
+    let MenItems = 0;
+    let KidsItems = 0
 
     let WomenCollectionLen = JSON.parse(localStorage.getItem('Women'));
     let MenCollectionLen = JSON.parse(localStorage.getItem('Men'));
     let KidsCollectionLen = JSON.parse(localStorage.getItem('Kids'));
+
+
 
     useEffect(() => {
         console.log("Use Effect 1")
@@ -28,7 +33,20 @@ const Mybag = () => {
             console.log("Use Effect 2")
         }
         else {
-            setTotalItems(WomenCollectionLen?.items.length + MenCollectionLen?.items.length + KidsCollectionLen?.items.length)
+            console.log(WomenCollectionLen?.items.length)
+            if (WomenCollectionLen?.items) {
+                WomenItems = WomenCollectionLen.items.length
+                console.log("Total Women Item======>", WomenItems)
+            }
+
+            if (MenCollectionLen?.items) {
+                MenItems = MenCollectionLen.items.length
+            }
+            if (KidsCollectionLen?.items) {
+                KidsItems = KidsCollectionLen.items.length
+            }
+            setTotalItems(WomenItems + MenItems + KidsItems)
+            // setTotalItems(WomenCollectionLen?.items.length + MenCollectionLen?.items.length + KidsCollectionLen?.items.length)
             // AllItemsInBag.items = [null]
             console.log("Use Effect 3")
             // console.log("localStorage.getItem('Women')===>", JSON.parse(localStorage.getItem('Women')).items)
@@ -129,7 +147,7 @@ const Mybag = () => {
             <h1 >Mybag</h1>
             <div className="Bag-sub-div">
                 <h3>Total-Items:{TotalItems}</h3>
-                {/* <h3>Cart ({totalUniqueItems})</h3> */}
+
             </div>
 
             <Divider className="divcol" />
@@ -162,7 +180,14 @@ const Mybag = () => {
                                                 -
                                             </Button>
                                             <Button className="quan-btn" variant="contained" color='success'
-                                                onClick={() => SetQuantity(Quantity + 1)}
+                                                onClick={() => {
+
+
+                                                    // localStorage.setItem('Women', JSON.stringify({ img: item.img, itemName: item.Name, price: item.price, type: 'Women', quantity: item.quantity + 1 }))
+
+                                                }
+                                                }
+
                                             >
                                                 +
                                             </Button>

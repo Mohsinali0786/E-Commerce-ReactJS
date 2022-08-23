@@ -1,21 +1,29 @@
-import MediaCard from '../Components/card';
 import ResponsiveAppBar from '../Components/navbar'
 import { Container } from '@mui/system';
 import { Grid, Button } from '@mui/material';
 import Data from '../Components/data'
-import { useCart } from 'react-use-cart';
 import Swal from 'sweetalert2';
-import { useState, useEffect, } from 'react';
+import { useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
 
+
+// For Card
+
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+// import { Typography } from '@mui/material';
+
+
 // for Model
-import * as React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { CodeSandboxCircleFilled } from '@ant-design/icons';
 
 
 const style = {
@@ -23,14 +31,18 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    // width: 400,
+    width: '100%',
+    height: 'auto',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    // transform: (0.5)
+
+
 };
 // for model
-
 
 
 
@@ -39,11 +51,14 @@ function Women() {
 
     // for model
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpen = () =>
+        setOpenModal(true);
+    const handleClose = () => {
+        setOpenModal(false)
+        console.log("Open===>", openModal)
+    };
+    const [MyModalData, setMyModalData] = useState({})
 
     const Navigate = useNavigate()
 
@@ -58,8 +73,23 @@ function Women() {
     const AddItemsInCart = (items) => {
 
         console.log("items in function", items)
-        setAddItems([...additems, { img: items.img, itemName: items.Name, price: items.price, type: 'Women' }])
+        setAddItems([...additems, { img: items.img, itemName: items.Name, price: items.price, type: 'Women', quantity: 0 }])
         setid(id + 1)
+
+    }
+
+    const modalData = (index) => {
+        handleOpen()
+        setMyModalData({
+
+            ItemName: Data.Women[index].Name,
+            Price: Data.Women[index].price,
+            img: Data.Women[index].img,
+            Des: Data.Women[index].Name + "is available in 3 sizes sm md lg quantity of each item will be given but before placing order please confirm that you selected item will be in our stock or not"
+
+
+        })
+        console.log("MyModalData=========>", MyModalData)
 
     }
     console.log("Add items state", additems)
@@ -71,17 +101,24 @@ function Women() {
         }
         else {
             var loginornot = JSON.parse(localStorage.getItem('id'))
-            if (loginornot.IsLogin === false) {
-                myalert1()
+            console.log("LoginOrNot====>", loginornot)
+            if (loginornot !== null) {
+
+                if (loginornot?.IsLogin === false) {
+                    myalert1()
+                }
+                else {
+                    Swal.fire(
+                        'Succeed!',
+                        'You Item has been added to cart sucessfuly!',
+                        'success'
+                    )
+
+                    localStorage.setItem('Women', JSON.stringify({ items: [...additems] }))
+                }
             }
             else {
-                Swal.fire(
-                    'Succeed!',
-                    'You Item has been added to cart sucessfuly!',
-                    'success'
-                )
-
-                localStorage.setItem('Women', JSON.stringify({ items: [...additems] }))
+                myalert1()
             }
         }
 
@@ -121,6 +158,10 @@ function Women() {
         })
     }
 
+
+
+    // console.log(Data.Women[index])
+
     // console.log("outside===>", additems)
     // const AddItemsInCart = (item) => {
     //     if (localStorage.getItem("id") === null) {
@@ -159,53 +200,69 @@ function Women() {
             <h1 className='pageheading'>Womens Collection</h1>
             <Grid className='cardstyling'>
                 {
-                    Data?.Women?.map((items, index) => {
+                    Data?.Women?.map((items, i) => {
 
-                        // console.log("diaplay card", displaycard)
+                        console.log("diaplay card=====>", i)
                         return (
-                            <Grid key={index} className='productcard' onClick={handleOpen}>
+                            <div key={i} className='productcard' >
 
 
-                                <MediaCard img={items.img} itemName={items.Name} price={items.price} />
+                                <Card className='Card-main-cont' >
+
+                                    <img src={items.img} className='p-img' />
+                                    <CardContent sx={{ textAlign: 'center' }}>
+                                        <Typography gutterBottom variant="h5" component="div">
+
+                                            <h5><b>Product</b><br /><i>{items.Name}</i></h5>
+
+                                        </Typography>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            Price:${items.price}
+                                        </Typography>
+                                    </CardContent>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        <Button onClick={() => { modalData(i) }}>View Description</Button>
+                                    </Typography>
+                                    <CardActions>
+                                    </CardActions>
+                                </Card >
+
+
+                                {/* <MediaCard img={items.img} itemName={items.Name} price={items.price} ViewDes={handleOpen} index={index}/> */}
                                 <Button variant='contained' className='addtocart-btn' color='success' onClick={() => { AddItemsInCart(items) }}>Add To Cart</Button>
-
-
-
-
-                                {/* for model */}
-
-                                <div>
-
-                                    <Modal
-                                        open={open}
-                                        onClose={handleClose}
-                                        aria-labelledby="modal-modal-title"
-                                        aria-describedby="modal-modal-description"
-                                    >
-                                        <Box sx={style}>
-                                            <img id="modal-modal-title" src={items.img} variant="h6" component="h2" />
-
-
-                                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                                <h2>Product:{items.Name}</h2>
-                                                <h5>Price:{items.price}</h5>
-                                                <h3>Description:</h3>
-                                                <h5>{items.Name} is available in 3 sizes sm md lg quantity of each item will be given but before placing order please confirm that you selected item will be in our stock or not</h5>
-                                            </Typography>
-                                            <Button variant='contained' onClick={handleClose}>Close</Button>
-                                        </Box>
-                                    </Modal>
-                                </div>
-
-                            </Grid>
-
+                            </div>
                         )
-                    })
-                }
+                    })}
+                <Grid className="modal">
+                    <Modal
+                        // index={index}
+                        open={openModal}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                        className='mymodal'
+                        sx={{ width: '70%', overflow: 'scroll', transform: 'scale(0.9)', marginTop: '20px' }}
+                    >
+                        <Box sx={style}>
+                            <img src={MyModalData.img} className='modalimage' />
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Name:{MyModalData.ItemName}
+                            </Typography>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Price:${MyModalData.Price}
+                            </Typography>
+                            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                <h3>Description</h3>
+                                <p>{MyModalData.Des}</p>
+                            </Typography>
+                            <Button onClick={() => handleClose()}>Close</Button>
+                        </Box>
+                    </Modal>
+                </Grid>
             </Grid>
 
-        </Container >
-    )
 
+        </Container >
+    );
 }
 export default Women;
