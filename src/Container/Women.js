@@ -5,9 +5,9 @@ import Data from '../Components/data'
 import Swal from 'sweetalert2';
 import { useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { deletestate } from '../Components/mybag'
 
-
-
+// console.log(deletestate())
 
 // For Card
 
@@ -23,7 +23,6 @@ import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { CodeSandboxCircleFilled } from '@ant-design/icons';
 
 
 const style = {
@@ -49,6 +48,9 @@ const style = {
 function Women() {
 
 
+
+    const [Quantity, SetQuantity] = useState(1);
+
     // for model
 
     const [openModal, setOpenModal] = useState(false);
@@ -72,8 +74,12 @@ function Women() {
 
     const AddItemsInCart = (items) => {
 
+
+
+
         console.log("items in function", items)
-        setAddItems([...additems, { img: items.img, itemName: items.Name, price: items.price, type: 'Women', quantity: 0 }])
+        // localStorage.setItem("selectedPeople", JSON.stringify(peopleInfoValue));
+        setAddItems([...additems, { img: items.img, itemName: items.Name, quantity: 1, price: items.price, type: 'Women', id: id }])
         setid(id + 1)
 
     }
@@ -93,6 +99,9 @@ function Women() {
 
     }
     console.log("Add items state", additems)
+
+
+
 
     useEffect(() => {
 
@@ -122,6 +131,12 @@ function Women() {
             }
         }
 
+
+        const sp = localStorage.getItem("Women");
+        console.log('Use Effect Sppppp=>', sp)
+        if (!sp) {
+            setAddItems(null);
+        }
     }, [additems])
 
     const myalert1 = () => {
@@ -160,36 +175,6 @@ function Women() {
 
 
 
-    // console.log(Data.Women[index])
-
-    // console.log("outside===>", additems)
-    // const AddItemsInCart = (item) => {
-    //     if (localStorage.getItem("id") === null) {
-    //         myalert1()
-    //         // Navigate('/form')
-    //     }
-    //     else {
-    //         var data = JSON.parse(localStorage.getItem('id'))
-    //         if (data.IsLogin) {
-    //             addItem(item)
-    //             Swal.fire(
-    //                 'Succeed!',
-    //                 'You Item has been added to cart sucessfuly!',
-    //                 'success'
-    //             )
-
-    //         }
-    //         else {
-    //             Swal.fire(
-    //                 'Please LogIn!',
-    //                 'To Add Item in Cart you should Login first!',
-    //                 'warning'
-    //             )
-    //             Navigate('/form')
-    //         }
-    //     }
-
-    // }
 
     return (
         <Container className='maincont'>
@@ -219,6 +204,7 @@ function Women() {
                                         <Typography gutterBottom variant="h5" component="div">
                                             Price:${items.price}
                                         </Typography>
+
                                     </CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
                                         <Button onClick={() => { modalData(i) }}>View Description</Button>
@@ -235,7 +221,6 @@ function Women() {
                     })}
                 <Grid className="modal">
                     <Modal
-                        // index={index}
                         open={openModal}
                         onClose={handleClose}
                         aria-labelledby="modal-modal-title"

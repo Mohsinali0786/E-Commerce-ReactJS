@@ -7,25 +7,13 @@ import Women from "../Container/Women";
 const Mybag = () => {
     const [Quantity, SetQuantity] = useState(1);
     const [deleteclicked, setdeleteclicked] = useState(false)
-    const [allbagitems, setallbagitems] = useState([])
-    const [aa, setaa] = useState()
-
-    let AllItemsInBag;
-
-    // let WomenItems=[];
-    // let MenItems=[];
-    // let KidsItems=[];
-
     const [TotalItems, setTotalItems] = useState(0)
     let WomenItems = 0;
     let MenItems = 0;
     let KidsItems = 0
-
     let WomenCollectionLen = JSON.parse(localStorage.getItem('Women'));
     let MenCollectionLen = JSON.parse(localStorage.getItem('Men'));
     let KidsCollectionLen = JSON.parse(localStorage.getItem('Kids'));
-
-
 
     useEffect(() => {
         console.log("Use Effect 1")
@@ -46,36 +34,56 @@ const Mybag = () => {
                 KidsItems = KidsCollectionLen.items.length
             }
             setTotalItems(WomenItems + MenItems + KidsItems)
-            // setTotalItems(WomenCollectionLen?.items.length + MenCollectionLen?.items.length + KidsCollectionLen?.items.length)
-            // AllItemsInBag.items = [null]
+
             console.log("Use Effect 3")
-            // console.log("localStorage.getItem('Women')===>", JSON.parse(localStorage.getItem('Women')).items)
-            // setWomenItems(JSON.parse(localStorage.getItem('Women')).items)
 
             setdeleteclicked(false)
 
-            // AllItemsInBag = JSON.parse(localStorage.getItem('mycart'))
-            // setallbagitems(AllItemsInBag?.items)
         }
 
 
     }, [deleteclicked === true])
 
-    // console.log("WomenData=====>", WomenItems.items)
-
-    console.log(allbagitems, 'allbagitems')
     useEffect(() => {
-        // if (allbagitems.length === 0) {
-
-        // }
-        // else {
-        //     setdeleteclicked(false)
-        // }
 
     }, [deleteclicked === true])
+    useEffect(() => {
+        console.log('UseEffect Running')
+
+
+    }, [Quantity])
+    const increment = (index) => {
+        console.log("Increment function====>", index)
+        console.log("Quantity", Quantity)
+
+
+
+
+
+
+        let datafromLS = (JSON.parse(localStorage.getItem('Women')))
+        console.log(datafromLS.items[index].id, 'datafromLS.items[index].id')
+        if (index === datafromLS.items[index].id) {
+
+            // setOrderIndex(index)
+            console.log(datafromLS, 'datafromLS ')
+            let specificItem = datafromLS.items[index]
+            SetQuantity(Quantity + 1)
+            specificItem.quantity = Quantity
+            datafromLS.items[index] = specificItem
+
+            localStorage.setItem('Women', JSON.stringify(datafromLS))
+
+            // localStorage.setItem('Women', JSON.stringify({ items: [...items, items[index].quantity = Quantity] }))
+
+        }
+
+
+    }
+
+
 
     const deleteitemfromcart = (type, index) => {
-        console.log("Type====>", type)
         deletealert()
         setdeleteclicked(true)
         if (JSON.parse(localStorage.getItem(type)).items.length !== null) {
@@ -86,12 +94,14 @@ const Mybag = () => {
                 console.log("Deleted Women====>", Women)
                 for (var i = 0; i < Women.length; i++) {
                     console.log("i===>", i, index)
+
                     if (index === i) {
                         Women.splice(index, 1)
                         console.log("Deleted Women====>", Women)
                         // setallbagitems(allbagitems)
                         localStorage.setItem('Women', JSON.stringify({ items: [...Women] }))
                     }
+                    // localStorage.removeItem('Women')
                 }
             }
             else if (JSON.parse(localStorage.getItem(type)).items[index].type === 'Men') {
@@ -127,7 +137,7 @@ const Mybag = () => {
 
 
 
-        console.log("index", index)
+        // console.log("index", index)
         // for (var i = 0; i < allbagitems.length; i++) {
         //     console.log("i===>", i, index)
         //     if (index === i) {
@@ -137,13 +147,16 @@ const Mybag = () => {
         //     }
         // }
     }
-    console.log("Lengthhhhhhhhhhh", WomenCollectionLen, MenCollectionLen, KidsCollectionLen)
+    // console.log("Lengthhhhhhhhhhh", WomenCollectionLen, MenCollectionLen, KidsCollectionLen)
 
     if ((WomenCollectionLen === null || WomenCollectionLen?.items.length === 0) && (MenCollectionLen === null || MenCollectionLen?.items.length === 0) && (KidsCollectionLen === null || KidsCollectionLen?.items.length === 0))
         return <p className="emptycart-text">Your cart is empty</p>;
+
+
     return (
 
         <div className="Bag-maindiv">
+            {console.log('Rendering Componenet')}
             <h1 >Mybag</h1>
             <div className="Bag-sub-div">
                 <h3>Total-Items:{TotalItems}</h3>
@@ -159,7 +172,7 @@ const Mybag = () => {
                 <ul>
                     {
                         JSON.parse(localStorage.getItem('Women'))?.items.map((item, index) => {
-                            console.log("From Women===>", item.type)
+                            // console.log("From Women===>", item.type)
                             return (
                                 <>
                                     <div className='lists2' >
@@ -169,7 +182,7 @@ const Mybag = () => {
                                         <div>
                                             <h4><b>ItemName</b><br />{item.itemName}</h4>
                                             <h4><b>Price:$</b>{item.price}</h4>
-                                            <h4><b>Quantity:</b>{Quantity}</h4>
+                                            <h4><b>Quantity:</b>{item.quantity}</h4>
                                         </div>
                                     </div>
                                     <div className="update-quantity" >
@@ -181,7 +194,8 @@ const Mybag = () => {
                                             </Button>
                                             <Button className="quan-btn" variant="contained" color='success'
                                                 onClick={() => {
-
+                                                    // SetQuantity(Quantity + 1)
+                                                    increment(index)
 
                                                     // localStorage.setItem('Women', JSON.stringify({ img: item.img, itemName: item.Name, price: item.price, type: 'Women', quantity: item.quantity + 1 }))
 
@@ -272,7 +286,7 @@ const Mybag = () => {
                                         </div>
                                     </div>
                                     <div className="update-quantity" >
-                                        <div className="D-quan-btn">
+                                        {/* <div className="D-quan-btn">
                                             <Button className="quan-btn" variant="contained" color='success'
                                                 onClick={() => SetQuantity(Quantity - 1)}
                                             >
@@ -283,7 +297,7 @@ const Mybag = () => {
                                             >
                                                 +
                                             </Button>
-                                        </div>
+                                        </div> */}
                                         <div>
                                             <Button color="error" className='del-btn' variant="contained" onClick={() => deleteitemfromcart(item.type, index)}>Delete</Button>
                                         </div>
