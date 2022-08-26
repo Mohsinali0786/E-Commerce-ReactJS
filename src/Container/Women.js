@@ -101,11 +101,17 @@ function Women() {
     console.log("Add items state", additems)
 
 
-
-
     useEffect(() => {
 
+        // Making Problem on reload check it
+        // {
+
+        // console.log('UseEffect additems', additems)
+        // localStorage.setItem('Women', JSON.stringify({ items: [] }))
+        // }
+
         if (additems.length === 0) {
+
 
         }
         else {
@@ -135,9 +141,12 @@ function Women() {
         const sp = localStorage.getItem("Women");
         console.log('Use Effect Sppppp=>', sp)
         if (!sp) {
-            setAddItems(null);
+            console.log('!!!!Spppppppp', !sp)
+            setAddItems([]);
         }
     }, [additems])
+
+
 
     const myalert1 = () => {
         const swalWithBootstrapButtons = Swal.mixin({

@@ -5,7 +5,10 @@ import { Divider } from "antd";
 import Swal from "sweetalert2";
 import Women from "../Container/Women";
 const Mybag = () => {
+
+
     const [Quantity, SetQuantity] = useState(1);
+    const [dataFromLSState, setdataFromLSState] = useState([])
     const [deleteclicked, setdeleteclicked] = useState(false)
     const [TotalItems, setTotalItems] = useState(0)
     let WomenItems = 0;
@@ -26,7 +29,6 @@ const Mybag = () => {
                 WomenItems = WomenCollectionLen.items.length
                 console.log("Total Women Item======>", WomenItems)
             }
-
             if (MenCollectionLen?.items) {
                 MenItems = MenCollectionLen.items.length
             }
@@ -52,37 +54,75 @@ const Mybag = () => {
 
 
     }, [Quantity])
+    let datafromLS = undefined
+    let updateddata = undefined
+    const [inc_Clicked, setInc_Clicked] = useState(false)
+    useEffect(() => {
+        console.log('Use Effect on "updatedata running')
+        datafromLS = (JSON.parse(localStorage.getItem('Women')))
+        setdataFromLSState(datafromLS)
+
+        // localStorage.setItem('Women', JSON.stringify(dataFromLSState))
+
+    }, [updateddata])
+
+    useEffect(() => {
+
+        setInc_Clicked(false)
+    }, [inc_Clicked === true])
+    console.log('setInc_Clicked', inc_Clicked)
     const increment = (index) => {
         console.log("Increment function====>", index)
-        console.log("Quantity", Quantity)
+        let myquan = 1
+        console.log("My Quan", myquan)
+        console.log(datafromLS, "________________________________")
+        console.log(dataFromLSState, 'Inside Increment Function datafromLSState')
 
 
+        dataFromLSState.items.map((myitems, i) => {
+            console.log('My items-------------------- ', myitems)
+            if (index !== myitems.id) {
+                console.log('If running')
 
+            }
+            else {
+                myquan = myitems.quantity + myquan
+                console.log('My Quantity Updated=====>', myquan)
+                myitems.quantity = myquan
+                console.log('Updated my items', myitems)
+                updateddata = myitems
+                dataFromLSState.items[index] = updateddata
+                myquan = 1
+                console.log('My Quan set to initial val', myquan)
 
+                // let dummydata = (JSON.parse(localStorage.getItem('Women')))
+                // console.log('dummydata', dummydata)
 
+            }
+            localStorage.setItem('Women', JSON.stringify(dataFromLSState))
 
-        let datafromLS = (JSON.parse(localStorage.getItem('Women')))
-        console.log(datafromLS.items[index].id, 'datafromLS.items[index].id')
-        if (index === datafromLS.items[index].id) {
+        })
+        // if (index === datafromLS.items[index].id) {
 
-            // setOrderIndex(index)
-            console.log(datafromLS, 'datafromLS ')
-            let specificItem = datafromLS.items[index]
-            SetQuantity(Quantity + 1)
-            specificItem.quantity = Quantity
-            datafromLS.items[index] = specificItem
+        //     // setOrderIndex(index)
+        //     console.log(datafromLS, 'datafromLS ')
+        //     let specificItem = datafromLS.items[index]
+        //     SetQuantity(Quantity + 1)
+        //     specificItem.quantity = Quantity
+        //     datafromLS.items[index] = specificItem
 
-            localStorage.setItem('Women', JSON.stringify(datafromLS))
+        //     localStorage.setItem('Women', JSON.stringify(datafromLS))
 
-            // localStorage.setItem('Women', JSON.stringify({ items: [...items, items[index].quantity = Quantity] }))
+        //     // localStorage.setItem('Women', JSON.stringify({ items: [...items, items[index].quantity = Quantity] }))
 
-        }
+        // }
+        setInc_Clicked(true)
 
 
     }
 
 
-
+    console.log('++++++Outside Function dataFromLSState+++++++', dataFromLSState)
     const deleteitemfromcart = (type, index) => {
         deletealert()
         setdeleteclicked(true)
